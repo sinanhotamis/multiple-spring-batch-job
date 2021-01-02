@@ -1,0 +1,10 @@
+spring:
+  batch:
+    job:
+      enabled: false
+
+
+
+singleF2FJob:
+  scheduler:
+    cronExpression: "*/30 * * * * *"
