@@ -1,14 +1,8 @@
 package com.snnlab.singleF2Fjob.controller;
 
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.beans.factory.annotation.Autowired;
-
 public abstract class BaseJobController {
 
-    @Autowired
-    protected JobLauncher jobLauncher;
+    public abstract void launch() throws Exception;
+    public abstract void stopByJobExecutionId(Long jobExecutionId) throws Exception;
 
-    @Autowired
-    protected Job job;
 }

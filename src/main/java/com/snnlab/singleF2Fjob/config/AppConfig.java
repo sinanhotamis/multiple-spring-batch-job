@@ -7,4 +7,5 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableBatchProcessing
 @EnableScheduling
-public class AppConfig { }
+public class AppConfig {
+}

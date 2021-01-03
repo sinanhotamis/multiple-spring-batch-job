@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SingleF2FJobConfigure extends BaseJobConfigure {
+public class SingleF2FJobConfigurer extends BaseJobConfigurer {
 
     @Bean
     public Job singleF2FJob() {
@@ -26,7 +26,7 @@ public class SingleF2FJobConfigure extends BaseJobConfigure {
 
     @Bean
     public Step firstChunkOrientedStep() {
-        return stepBuilderFactory.get("firstChunkOrientedStep")
+         return  stepBuilderFactory.get("firstChunkOrientedStep")
                 .<SnnLabInfoDTO, SnnLabInfoDTO>chunk(3)
                 .reader(firstChunkOrientedStepReader())
                 .writer(firstChunkOrientedStepWriter())

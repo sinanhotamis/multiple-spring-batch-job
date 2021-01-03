@@ -5,8 +5,7 @@ import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.JobExecutionListener;
 import org.springframework.batch.core.JobInstance;
 
-import static org.springframework.batch.core.ExitStatus.COMPLETED;
-import static org.springframework.batch.core.ExitStatus.FAILED;
+import static org.springframework.batch.core.ExitStatus.*;
 
 public class BaseJobListener implements JobExecutionListener {
 
@@ -25,6 +24,10 @@ public class BaseJobListener implements JobExecutionListener {
         } else if (FAILED.equals(jobExecutionExitStatus)) {
             System.out.println(generateGenericListenerMessageHeader(jobExecution.getJobInstance())
                     .append(" has failed..").toString());
+        }
+        else if (NOOP.equals(jobExecutionExitStatus)) {
+            System.out.println(generateGenericListenerMessageHeader(jobExecution.getJobInstance())
+                    .append(" has no operation..").toString());
         }
     }
 
