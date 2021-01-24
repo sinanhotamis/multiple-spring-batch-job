@@ -9,7 +9,7 @@
 * Run SingleF2FJob Application main class.
 * Job is running on embedded Tomcat Server scheduled.
 * The job executions can be operated over LobLauncherController endpoints.
-* Embedded H2 Database can be observed on local machine
+* Embedded H2 Database can be observed on local machine  http://localhost:8080/h2-console
 
 ### Reference Documentation
 For further reference, please consider the following sections:
