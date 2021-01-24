@@ -17,3 +17,6 @@ spring:
 singleF2FJob:
   scheduler:
     cronExpression: "*/30 * * * * *"
+  name: singleF2FJob
+  resourcePath: /home/sinanhotamis/snn_lab/projects/batch/single-F2F-job/  #Change your application local path
+  chunkSize: 10

@@ -7,18 +7,25 @@ import org.springframework.batch.item.file.FlatFileItemReader;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.FileUrlResource;
 
+import java.net.MalformedURLException;
 
 public class SingleF2FJobItemReader implements ItemReader<SnnLabInfoDTO> {
 
     private FlatFileItemReader<SnnLabInfoDTO> paymentInfoDTOFlatFileItemReader;
 
-    public SingleF2FJobItemReader(){
+    private static final String ENCODING_UTF8 = "UTF-8";
+
+    private static final String ITEM_READER_LINE_TOKENIZER = ";";
+
+    private static final String ITEM_READER_INPUT_FILE = "snnLabF2FJobReaderInput.txt";
+
+    public SingleF2FJobItemReader(String resourcePath) throws MalformedURLException {
         DefaultLineMapper<SnnLabInfoDTO> defaultLineMapper = generateDefaultLineMapper();
-        paymentInfoDTOFlatFileItemReader = new FlatFileItemReader<SnnLabInfoDTO>();
-        paymentInfoDTOFlatFileItemReader.setResource(new FileSystemResource("snnLabF2FJobReaderInput.txt"));
-        paymentInfoDTOFlatFileItemReader.setEncoding("UTF-8");
+        paymentInfoDTOFlatFileItemReader = new FlatFileItemReader<>();
+        paymentInfoDTOFlatFileItemReader.setResource(new FileUrlResource(resourcePath + ITEM_READER_INPUT_FILE));
+        paymentInfoDTOFlatFileItemReader.setEncoding(ENCODING_UTF8);
         paymentInfoDTOFlatFileItemReader.setLineMapper(defaultLineMapper);
         paymentInfoDTOFlatFileItemReader.open(new ExecutionContext());
     }
@@ -31,7 +38,7 @@ public class SingleF2FJobItemReader implements ItemReader<SnnLabInfoDTO> {
     private DefaultLineMapper<SnnLabInfoDTO> generateDefaultLineMapper() {
         DefaultLineMapper<SnnLabInfoDTO> defaultLineMapper = new DefaultLineMapper<>();
         FieldSetMapper<SnnLabInfoDTO> fieldSetMapper = generateFieldSetMapper();
-        DelimitedLineTokenizer delimitedLineTokenizer = new DelimitedLineTokenizer(";");
+        DelimitedLineTokenizer delimitedLineTokenizer = new DelimitedLineTokenizer(ITEM_READER_LINE_TOKENIZER);
 
         defaultLineMapper.setLineTokenizer(delimitedLineTokenizer);
         defaultLineMapper.setFieldSetMapper(fieldSetMapper);
@@ -51,5 +58,4 @@ public class SingleF2FJobItemReader implements ItemReader<SnnLabInfoDTO> {
 
         return fieldSetMapper;
     }
-
 }
