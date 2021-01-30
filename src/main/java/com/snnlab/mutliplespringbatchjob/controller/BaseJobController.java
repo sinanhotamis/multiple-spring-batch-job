@@ -35,17 +35,19 @@ public abstract class BaseJobController {
         return new ResponseEntity( "Job has launched successfully",HttpStatus.OK);
     }
 
-    @RequestMapping(value="/stopByJobExecutionId",method = RequestMethod.POST)
-    public final ResponseEntity<JobOperatorResponse> stopByJobExecutionId(@RequestBody JobOperatorRequest jobOperatorRequest) throws Exception{
+    @RequestMapping(value="/stopJob",method = RequestMethod.POST)
+    public final ResponseEntity<JobOperatorResponse> stopJob(@RequestBody JobOperatorRequest jobOperatorRequest) throws Exception{
         JobOperatorResponse response = new JobOperatorResponse();
         response.setIsStop(jobOperator.stop(jobOperatorRequest.getJobExecutionId()));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(value="/restartByJobExecutionId",method = RequestMethod.POST)
-    public final ResponseEntity<JobOperatorResponse> restartByJobExecutionId(@RequestBody JobOperatorRequest jobOperatorRequest) throws Exception {
+    @RequestMapping(value="/restartJob",method = RequestMethod.POST)
+    public final ResponseEntity<JobOperatorResponse> restartJob(@RequestBody JobOperatorRequest jobOperatorRequest) throws Exception {
         JobOperatorResponse response = new JobOperatorResponse();
         response.setNewJobExecutionId(jobOperator.restart(jobOperatorRequest.getJobExecutionId()));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    // You can add other job operator services as your needs..
 }
