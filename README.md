@@ -15,6 +15,7 @@
 * Job is running on embedded Tomcat Server scheduled.
 * The job executions can be operated over LobLauncherController endpoints.
 * Embedded H2 Database can be observed on local machine  http://localhost:8080/h2-console
+* You can open scheduled jobs on ScheduledJobTask class.
 
 ### Reference Documentation
 For further reference, please consider the following sections:
