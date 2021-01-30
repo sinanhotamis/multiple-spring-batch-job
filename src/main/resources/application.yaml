@@ -2,21 +2,24 @@ spring:
   batch:
     job:
       enabled: false
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driverClassName: org.h2.Driver
-    username: snnLab
-    password: 1234
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
   h2:
     console:
       enabled: true
       path: /h2-console
+  datasource:
+    primary:
+      jdbcUrl: jdbc:h2:mem:testdb
+      username: snnLab
+      password: 1234
+      driverClassName: org.h2.Driver
+    secondary:
+      jdbcUrl: secondary db jdbcUrl
+      username: secondary db username
+      password: secondary db password
+      driverClassName: secondary db driver class name
 
-singleF2FJob:
-  scheduler:
-    cronExpression: "*/30 * * * * *"
-  name: singleF2FJob
-  resourcePath: /home/sinanhotamis/snn_lab/projects/batch/single-F2F-job/  #Change your application local path
-  chunkSize: 10
+scheduling:
+  isScheduled: true
+  cronExpression:
+    singleF2FJob: "*/30 * * * * *"
+    d2FJob: "*/30 * * * * *"
