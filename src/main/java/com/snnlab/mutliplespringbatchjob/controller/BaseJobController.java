@@ -26,7 +26,7 @@ public abstract class BaseJobController {
     protected JobRegistry jobRegistry;
 
     @RequestMapping(value="/launch", method = RequestMethod.POST)
-    private ResponseEntity<String> launch(@RequestBody JobLauncherRequest jobLauncherRequest) throws Exception {
+    public final ResponseEntity<String> launch(@RequestBody JobLauncherRequest jobLauncherRequest) throws Exception {
         JobParameters jobParameters = jobLauncherRequest.getJobParameters();
         if(null == jobParameters){
             jobParameters = new JobParameters();
@@ -36,23 +36,16 @@ public abstract class BaseJobController {
     }
 
     @RequestMapping(value="/stopByJobExecutionId",method = RequestMethod.POST)
-    private ResponseEntity<JobOperatorResponse> stopByJobExecutionId(@RequestBody JobOperatorRequest jobOperatorRequest) throws Exception{
+    public final ResponseEntity<JobOperatorResponse> stopByJobExecutionId(@RequestBody JobOperatorRequest jobOperatorRequest) throws Exception{
         JobOperatorResponse response = new JobOperatorResponse();
         response.setIsStop(jobOperator.stop(jobOperatorRequest.getJobExecutionId()));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @RequestMapping(value="/restartByJobExecutionId",method = RequestMethod.POST)
-    private ResponseEntity<JobOperatorResponse> restartByJobExecutionId(@RequestBody JobOperatorRequest jobOperatorRequest) throws Exception {
+    public final ResponseEntity<JobOperatorResponse> restartByJobExecutionId(@RequestBody JobOperatorRequest jobOperatorRequest) throws Exception {
         JobOperatorResponse response = new JobOperatorResponse();
         response.setNewJobExecutionId(jobOperator.restart(jobOperatorRequest.getJobExecutionId()));
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    @RequestMapping(value="/startByJobName",method = RequestMethod.POST)
-    private ResponseEntity<JobOperatorResponse> startByJobExecutionId(@RequestBody JobOperatorRequest jobOperatorRequest) throws Exception{
-        JobOperatorResponse response = new JobOperatorResponse();
-        response.setIsStop(jobOperator.stop(jobOperatorRequest.getJobExecutionId()));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
