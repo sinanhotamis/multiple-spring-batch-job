@@ -12,13 +12,11 @@ import org.springframework.batch.core.Step;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.net.MalformedURLException;
-
 @Configuration
 public class SingleF2FJobConfigurer extends BaseJobConfigurer {
 
     @Bean
-    public Job singleF2FJob() throws MalformedURLException {
+    public Job singleF2FJob() {
         return jobBuilderFactory.get(JobNames.SINGLE_F2F_JOB)
                 .start(firstChunkOrientedStep())
                 .next(taskletStep())
@@ -27,7 +25,7 @@ public class SingleF2FJobConfigurer extends BaseJobConfigurer {
     }
 
 
-    private Step firstChunkOrientedStep() throws MalformedURLException {
+    private Step firstChunkOrientedStep(){
         return  stepBuilderFactory.get("firstChunkOrientedStep")
                 .<SnnLabInfoDTO, SnnLabInfoDTO>chunk(10)
                 .reader(new SingleF2FJobItemReader())

@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import javax.sql.DataSource;
-import java.net.MalformedURLException;
 
 @Configuration
 public class SingleD2FJobConfigurer extends BaseJobConfigurer {
@@ -22,12 +21,12 @@ public class SingleD2FJobConfigurer extends BaseJobConfigurer {
     private DataSource dataSource;
 
     @Autowired
-    public SingleD2FJobConfigurer(@Qualifier("secondarDataSource")DataSource dataSource){
+    public SingleD2FJobConfigurer(@Qualifier("secondaryDataSource")DataSource dataSource){
         this.dataSource = dataSource;
     }
 
     @Bean
-    public Job d2FJob() throws MalformedURLException {
+    public Job d2FJob() {
         return jobBuilderFactory.get(JobNames.SINGLE_D2F_JOB)
                 .start(firstDBChunkOrientedStep())
                 .listener(new BaseJobExecutionListener())
@@ -35,7 +34,7 @@ public class SingleD2FJobConfigurer extends BaseJobConfigurer {
     }
 
 
-    private Step firstDBChunkOrientedStep() throws MalformedURLException {
+    private Step firstDBChunkOrientedStep() {
         return stepBuilderFactory.get("firstDBChunkOrientedStep")
                 .<SnnLabInfoDTO, SnnLabInfoDTO>chunk(10)
                 .reader(new JdbcCursorItemReaderTemplate(this.dataSource))
