@@ -20,7 +20,7 @@ public class DataSourceConfiguration {
 
     @Bean(name="secondaryDataSource")
     @ConfigurationProperties(prefix = "spring.datasource.secondary")
-    public DataSource alfredDataSource() {
+    public DataSource secondaryDataSource() {
         return DataSourceBuilder.create().build();
     }
 
