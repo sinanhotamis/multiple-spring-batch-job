@@ -10,34 +10,14 @@ import org.springframework.jdbc.core.RowMapper;
 
 import javax.sql.DataSource;
 
-public class JdbcCursorItemReaderTemplate implements ItemReader<SnnLabInfoDTO> {
-
-    private JdbcCursorItemReader<SnnLabInfoDTO> jdbcCursorItemReader;
+public class JdbcCursorItemReaderTemplate extends JdbcCursorItemReader<SnnLabInfoDTO>  {
 
     public JdbcCursorItemReaderTemplate(DataSource dataSource){
-        jdbcCursorItemReader = new JdbcCursorItemReader<>();
-        jdbcCursorItemReader.setDataSource(dataSource);
-        jdbcCursorItemReader.setRowMapper(getRowMapper());
+        this.setDataSource(dataSource);
+        this.setRowMapper(getRowMapper());
+        this.setSql("set sql for your db access");
+
     }
-
-    @BeforeStep
-    public void beforeStep() {
-        //You can change sql query programmaticaly before step action..
-        jdbcCursorItemReader.setSql("set sql for your db access");
-        jdbcCursorItemReader.open(new ExecutionContext());
-    }
-
-    @Override
-    public SnnLabInfoDTO read() throws Exception{
-        return jdbcCursorItemReader.read();
-    }
-
-    @AfterStep
-    public void afterStep(){
-        jdbcCursorItemReader.close();
-    }
-
-
     private RowMapper<SnnLabInfoDTO> getRowMapper() {
         RowMapper<SnnLabInfoDTO> rowMapper = (resultSet, i) -> {
             SnnLabInfoDTO snnLabInfoDTO = new SnnLabInfoDTO();

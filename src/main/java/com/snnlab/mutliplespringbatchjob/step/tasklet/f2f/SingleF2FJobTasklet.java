@@ -8,7 +8,7 @@ import org.springframework.batch.repeat.RepeatStatus;
 public class SingleF2FJobTasklet implements Tasklet {
 
     @Override
-    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception {
+    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext){
         //TODO any single task
         System.out.println("Example tasklet is executed..");
         return RepeatStatus.FINISHED;

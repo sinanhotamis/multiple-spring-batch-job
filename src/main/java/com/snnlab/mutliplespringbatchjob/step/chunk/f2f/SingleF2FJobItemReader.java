@@ -13,40 +13,23 @@ import org.springframework.core.io.FileUrlResource;
 
 import java.net.MalformedURLException;
 
-public class SingleF2FJobItemReader implements ItemReader<SnnLabInfoDTO> {
-
-    private FlatFileItemReader<SnnLabInfoDTO> paymentInfoDTOFlatFileItemReader;
+public class SingleF2FJobItemReader extends FlatFileItemReader<SnnLabInfoDTO>  {
 
     private static final String ENCODING_UTF8 = "UTF-8";
-
     private static final String ITEM_READER_LINE_TOKENIZER = ";";
-
     private static final String ITEM_READER_INPUT_FILE = "snnLabF2FJobReaderInput.txt";
-
     private static final String RESOURCE_PATH = "/Users/sinan.hotamis/";
 
     public SingleF2FJobItemReader(){
         DefaultLineMapper<SnnLabInfoDTO> defaultLineMapper = generateDefaultLineMapper();
-        paymentInfoDTOFlatFileItemReader = new FlatFileItemReader<>();
-        paymentInfoDTOFlatFileItemReader.setEncoding(ENCODING_UTF8);
-        paymentInfoDTOFlatFileItemReader.setLineMapper(defaultLineMapper);
+        this.setEncoding(ENCODING_UTF8);
+        this.setLineMapper(defaultLineMapper);
     }
 
     @BeforeStep
     public void beforeStep() throws MalformedURLException {
         //You can change resource info programmaticalyy before step execution.
-        paymentInfoDTOFlatFileItemReader.setResource(new FileUrlResource(RESOURCE_PATH + ITEM_READER_INPUT_FILE));
-        paymentInfoDTOFlatFileItemReader.open(new ExecutionContext());
-    }
-
-    @Override
-    public SnnLabInfoDTO read() throws Exception {
-        return paymentInfoDTOFlatFileItemReader.read();
-    }
-
-    @AfterStep
-    public void afterStep(){
-        paymentInfoDTOFlatFileItemReader.close();
+        this.setResource(new FileUrlResource(RESOURCE_PATH + ITEM_READER_INPUT_FILE));
     }
 
     private DefaultLineMapper<SnnLabInfoDTO> generateDefaultLineMapper() {
